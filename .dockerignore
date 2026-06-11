@@ -1,6 +1,10 @@
 .ai/*
 templates/*
 .env.local
+ecommerce-frontend/node_modules/*
+ecommerce-frontend/coverage/*
+backend/node_modules/*
+docs/architecture/*
 node_modules/*
 dist/*
 build/*

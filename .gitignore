@@ -2,8 +2,10 @@
 !.ai/entrypoint.md
 !.ai/current_state.md
 !.ai/orchestration.md
+docs/architecture/*
 templates/*
 .env.local
+ecommerce-frontend/node_modules/*
 backend/node_modules/*
 dist/*
 build/*
