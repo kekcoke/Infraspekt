@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InfraWatch Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #1a1a1a; color: #fff; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 30px; }
+    .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .status-card { background: #2d2d2d; padding: 20px; border-radius: 8px; border-left: 4px solid #00ff88; }
+    .status-card.degraded { border-left-color: #ffaa00; }
+    .status-card.down { border-left-color: #ff4444; }
+    .disk-card { background: #2d2d2d; padding: 20px; border-radius: 8px; margin-top: 24px; }
+    .error { color: #ff4444; text-align: center; }
+    .ts { text-align: center; margin-top: 16px; color: #888; font-size: 0.85em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>InfraWatch — Infrastructure Monitoring</h1>
+      <p>Real-time system status dashboard</p>
+    </div>
+    <div id="status-container">Loading infrastructure status...</div>
+    <div id="disk-container"></div>
+  </div>
+  <script>
+    const API = 'http://localhost:3001';
+
+    async function loadStatus() {
+      try {
+        const r = await fetch(`${API}/api/infrastructure/status`);
+        const d = await r.json();
+        document.getElementById('status-container').innerHTML = `
+          <div class="status-grid">
+            ${d.services.map(s => `
+              <div class="status-card ${s.status !== 'running' ? s.status : ''}">
+                <h3>${s.name}</h3>
+                <p><strong>Status:</strong> ${s.status}</p>
+                <p><strong>Uptime:</strong> ${s.uptime}</p>
+              </div>`).join('')}
+          </div>
+          <p class="ts">Services updated: ${new Date(d.timestamp).toLocaleString()}</p>`;
+      } catch {
+        document.getElementById('status-container').innerHTML = '<p class="error">Failed to load service status. Is the backend running?</p>';
+      }
+    }
+
+    async function loadDisk() {
+      try {
+        const r = await fetch(`${API}/api/infrastructure/disk`);
+        const d = await r.json();
+        document.getElementById('disk-container').innerHTML = `
+          <div class="disk-card">
+            <h3>💾 Disk Usage — ${d.mount}</h3>
+            <p><strong>Filesystem:</strong> ${d.filesystem} &nbsp;|&nbsp;
+               <strong>Size:</strong> ${d.size} &nbsp;|&nbsp;
+               <strong>Used:</strong> ${d.used} (${d.use_percent}) &nbsp;|&nbsp;
+               <strong>Available:</strong> ${d.available}</p>
+            <p class="ts">Disk updated: ${new Date(d.timestamp).toLocaleString()}</p>
+          </div>`;
+      } catch {
+        document.getElementById('disk-container').innerHTML = '<p class="error">Failed to load disk metrics.</p>';
+      }
+    }
+
+    loadStatus(); loadDisk();
+    setInterval(loadStatus, 30000);
+    setInterval(loadDisk, 60000);
+  </script>
+</body>
+</html>
