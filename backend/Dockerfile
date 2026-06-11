@@ -1,8 +1,8 @@
 FROM node:18-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-# Clean cache and use standard production flag for Node 18 compatibility
-RUN npm cache clean --force && npm install --only=production
+# Update npm and perform a clean install for production
+RUN npm install -g npm@latest && npm install --production
 
 FROM node:18-alpine AS runtime
 WORKDIR /app
