@@ -1,14 +1,16 @@
 from typing import Dict, Optional, Any
 from datetime import datetime
 
+
 class LogEntry:
     """Represents a single log entry with strict typing."""
+
     def __init__(
-        self, 
-        timestamp: datetime, 
-        level: str, 
-        message: str, 
-        metadata: Optional[Dict[str, Any]] = None
+        self,
+        timestamp: datetime,
+        level: str,
+        message: str,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
         self.timestamp = timestamp
         self.level = level.upper()
@@ -20,5 +22,5 @@ class LogEntry:
             "timestamp": self.timestamp.isoformat(),
             "level": self.level,
             "message": self.message,
-            "metadata": self.metadata
+            "metadata": self.metadata,
         }

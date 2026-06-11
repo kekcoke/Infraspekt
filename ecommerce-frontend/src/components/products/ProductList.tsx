@@ -122,7 +122,7 @@ const ProductList: React.FC = () => {
 
         <Grid container spacing={3}>
           {products.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product.id}>
+            <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>
               <ProductCard
                 product={product}
                 onEdit={handleEditProduct}
