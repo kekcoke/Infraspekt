@@ -21,7 +21,7 @@ jobs:
             backend/package-lock.json
             backend/package.json
       - name: Install Node dependencies
-        run: cd backend && npm ci
+        run: cd backend && npm ci --verbose
       - name: Node Lint
         run: cd backend && npm run lint
       - name: Node Test
