@@ -16,7 +16,10 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
-          cache-dependency-path: backend/package-lock.json
+          # Cache bust v1 - forcing fresh install
+          cache-dependency-path: |
+            backend/package-lock.json
+            backend/package.json
       - name: Install Node dependencies
         run: cd backend && npm ci
       - name: Node Lint
