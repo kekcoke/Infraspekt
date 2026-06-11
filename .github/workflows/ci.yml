@@ -10,11 +10,11 @@ jobs:
   node-quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
           # Cache bust v1 - forcing fresh install
           cache-dependency-path: |
@@ -33,9 +33,9 @@ jobs:
       run:
         working-directory: python-backend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install dependencies
@@ -48,9 +48,9 @@ jobs:
   python-qa-tools:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install Tools
@@ -73,11 +73,11 @@ jobs:
   frontend-quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: "18"
+          node-version: "24"
       - name: TypeScript Check
         run: |
           cd ecommerce-frontend
@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [node-quality, python-backend-legacy, python-qa-tools, frontend-quality]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build Images
         run: |
           docker build --no-cache -t backend:ci ./backend
