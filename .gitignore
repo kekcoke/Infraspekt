@@ -1,4 +1,7 @@
 .ai/*
+!.ai/entrypoint.md
+!.ai/current_state.md
+!.ai/orchestration.md
 templates/*
 .env.local
 backend/node_modules/*
