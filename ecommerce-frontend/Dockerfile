@@ -1,11 +1,11 @@
-FROM node:22-alpine AS build
+FROM node:20-alpine AS build
 WORKDIR /app
-# Set environment to bypass strict ESM resolution errors
+# Set environment to bypass strict ESM resolution and reduce memory usage
 ENV GENERATE_SOURCEMAP=false
 ENV CI=false
 COPY package*.json ./
-# Install react-transition-group explicitly to ensure resolution
-RUN npm install react-transition-group && npm ci
+# Use install with legacy-peer-deps for better compatibility with modern MUI/React combinations
+RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
 
