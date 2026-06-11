@@ -1,0 +1,10 @@
+repos:
+  - repo: https://github.com/psf/black
+    hooks:
+      - id: black
+        files: ^backend/
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    hooks:
+      - id: mypy
+        files: ^backend/
+        additional_dependencies: [types-requests, types-datetime]

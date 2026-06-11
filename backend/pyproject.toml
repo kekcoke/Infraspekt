@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.mypy]
+disallow_untyped_defs = true
+strict_equality = true
+warn_return_any = true
+python_version = "3.11"
+check_untyped_defs = true
+warn_unused_ignores = true
+show_error_codes = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
