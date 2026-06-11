@@ -2,7 +2,7 @@ FROM node:18-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
 # Switch to install for better compatibility in alpine environments
-RUN npm install --omit=dev
+RUN npm install --omit=dev || (cat /root/.npm/_logs/*-debug.log && exit 1)
 
 FROM node:18-alpine AS runtime
 WORKDIR /app
