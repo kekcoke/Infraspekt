@@ -43,9 +43,47 @@ export interface Product {
 - [ ] Dockerfile and Nginx configuration ready for deployment.
 - [ ] Homework: Category management system implemented.
 
-## 6. Implementation Plan
-1. **Phase 2.1**: Initialize React app and install dependencies.
-2. **Phase 2.2**: Define Types and API Service.
-3. **Phase 2.3**: Implement UI Components (Card, List, Form).
-4. **Phase 2.4**: Implement Testing Harness.
-5. **Phase 4**: Containerization (Dockerfile, Nginx, Compose).
+## 6. Implementation Plan (Commit Units)
+
+### Commit 1 — Project Bootstrap
+- `ecommerce-frontend/` initialized via `create-react-app --template typescript`
+- Dependencies installed: MUI, Axios, React Router, testing libraries
+- **Gate:** `tsc --noEmit` exits 0
+- **Message:** `chore(day-03): bootstrap React TS project and install dependencies`
+
+### Commit 2 — Types & API Service
+- `src/types/Product.ts`
+- `src/services/api.ts`
+- **Gate:** `tsc --noEmit` exits 0
+- **Message:** `feat(day-03): define Product types and Axios API service`
+
+### Commit 3 — UI Components
+- `src/components/products/ProductCard.tsx`
+- `src/components/products/ProductForm.tsx`
+- `src/components/products/ProductList.tsx`
+- `src/App.tsx` updated
+- **Gate:** `CI=true npm run build` exits 0
+- **Message:** `feat(day-03): implement Product CRUD dashboard components`
+
+### Commit 4 — Tests (QA Gate)
+- `src/components/products/tests/ProductCard.test.tsx`
+- `src/App.test.tsx` updated
+- **Gate:** `CI=true npm run test:coverage` exits 0, all suites pass
+- **Message:** `test(day-03): add unit tests for ProductCard and App (4 tests, passing)`
+
+### Commit 5 — Assignment: Dynamic Category Management
+- `src/components/products/CategoryManager.tsx`
+- `src/components/products/ProductForm.tsx` updated (dynamic categories prop)
+- `src/components/products/ProductList.tsx` updated (category state + handlers)
+- **Gate:** `CI=true npm run test:coverage` exits 0
+- **Message:** `feat(day-03): add dynamic CategoryManager (assignment)`
+
+### Commit 6 — Ops & Docs
+- `ecommerce-frontend/Dockerfile`
+- `ecommerce-frontend/nginx.conf`
+- `ecommerce-frontend/docker-compose.yml`
+- `ops/runbooks/day_03_runbook.md`
+- `docs/architecture/day_03_spec.md`
+- `docs/Day_03_Review_Report.md`
+- **Gate:** `docker build` exits 0 (or noted as skipped if Docker unavailable)
+- **Message:** `chore(day-03): add Dockerfile, Nginx config, and ops runbook`
