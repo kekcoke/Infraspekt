@@ -48,14 +48,15 @@ When provided with a new Daily Task, you must execute the following loop seriall
 - **Output:** Generate `docs/architecture/day_{{DAY_NUMBER}}_spec.md`. Define the layer changes, data contracts, and success criteria.
 
 ### Phase 2: Implementation + Validation (Developer + QA paired)
-- **Branch first:** Developer applies `skill_sequential_commit` Step 1 — checkout `feature/day-{{DAY_NUMBER}}-<slug>` from `develop`.
-- **For each task in the Architect's spec, in order:**
-  1. **Developer implements** the task (scoped change only).
-  2. **QA writes tests** for that task before the commit gate runs.
-  3. **Commit gate:** Run lint + full test suite. Both must pass. Any failure halts — fix before continuing.
-  4. **Commit** on double-green with conventional message including coverage %.
-- **Output:** Source code + test files with exact paths + a `## Commit Log` table (SHA, lint, tests, coverage per task).
-- **Rationale:** Tests must exist at commit time for the gate to be meaningful. QA and Developer work in lockstep per task.
+- **Branch first:** Checkout `feature/day-{{DAY_NUMBER}}-<slug>` from `develop`.
+- **Commit units are defined in the Architect's spec** under `## Implementation Plan (Commit Units)`. Each unit lists its files, gate command, and commit message. Iterate over these units — do NOT batch across units.
+- **For each commit unit in the spec, in order:**
+  1. **Developer implements** all files listed for that unit (parallel writes are fine within a unit).
+  2. **QA writes or updates tests** for that unit before the commit gate runs.
+  3. **Commit gate:** Run the gate command specified in the unit. Must exit 0. Any failure halts — fix before continuing.
+  4. **Commit** on green with the conventional message from the spec, appending coverage % where applicable.
+- **Output:** Source code + test files with exact paths + a `## Commit Log` table (SHA, gate result, coverage per unit).
+- **Rationale:** Each commit unit must be independently buildable and testable. Tests must exist at commit time. Never accumulate multiple units into one commit.
 
 ### Phase 4: Delivery & Operations (DevOps)
 - **Action:** Containerize the new code, update the CI/CD pipeline, and write the runbook.

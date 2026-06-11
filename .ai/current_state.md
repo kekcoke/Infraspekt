@@ -28,6 +28,7 @@
 |---|---|---|---|---|
 | 01 | InfraWatch Foundation | `docs/architecture/day_01_spec.md`, `backend/src/`, `frontend/public/index.html`, `docker-compose.yml`, `.github/workflows/ci.yml`, `ops/runbooks/day_01_runbook.md` | Assignment: disk endpoint + branch strategy implemented | ✅ `GET /api/infrastructure/disk` + branch strategy documented in runbook |
 | 02 | Python Flask Backend | `docs/architecture/day_02_spec.md`, `python-backend/app/`, `python-backend/tests/` (15 tests, 100% cov), `python-backend/Dockerfile`, `ops/runbooks/day_02_runbook.md` | App factory, 3 blueprints, metrics assignment, request-duration middleware; PR #4 open against develop | ✅ All 5 endpoints + middleware + CI job added |
+| 03 | React E-Commerce Frontend | `ecommerce-frontend/src/`, `ecommerce-frontend/Dockerfile`, `docs/architecture/day_03_spec.md`, `ops/runbooks/day_03_runbook.md` | MUI Dashboard, CRUD products, dynamic category management assignment; local/Docker ready | ✅ UI + CRUD + Dynamic Categories + Dockerization |
 
 ---
 
@@ -51,6 +52,7 @@
 | Static frontend (nginx) | Day 01 | — | `frontend/public/index.html`; port 3000; polls backend every 30s |
 | Docker Compose stack | Day 01 | Day 02 | `docker-compose.yml`; backend healthcheck gates frontend startup |
 | Python/Flask backend (Flask 2.3, Python 3.11) | Day 02 | — | `python-backend/app/`; port 5001 (gunicorn); app factory + 3 blueprints (health, infrastructure, metrics) |
+| React Frontend (TS/MUI) | Day 03 | — | `ecommerce-frontend/src/`; port 3000 (dev) / 80 (docker); Product & Category CRUD |
 
 ---
 
@@ -59,7 +61,7 @@
 > The current known state of the running system. Updated each day.
 
 ```
-Services:   infrawatch-backend (Express, port 3001), infrawatch-python-backend (Flask/gunicorn, port 5001), infrawatch-frontend (nginx, port 3000)
+Services:   infrawatch-backend (Express, port 3001), infrawatch-python-backend (Flask, port 5001), ecommerce-frontend (React, port 3000/80)
 Databases:  (none configured)
 Queues:     (none configured)
 Auth:       (none configured)
@@ -93,11 +95,12 @@ CI/CD:      GitHub Actions — lint+test (Node 18) + lint+test (Python 3.11) + d
 ## Last Session Summary
 
 **Date:** 2026-06-11
-**Day Completed:** Day 02 — Python Flask Backend
+**Day Completed:** Day 03 — React E-Commerce Frontend
 **Handed Off To Next Session:**
-- Python backend (`python-backend/`) runs on port 5001; Node backend (`backend/`) on 3001 — both coexist unchanged.
-- PR #4 (feat/day02-python_backend → develop) is open at https://github.com/kekcoke/Infraspekt/pull/4 — merge manually (PAT lacks merge permission).
-- All mock data in python-backend; real metrics/DB layer planned Day 10–15 per dependency map.
+- New React frontend in `ecommerce-frontend/` serves a Product Dashboard on port 3000 (dev) or port 80 (Docker).
+- Assignment completed: dynamic CategoryManager added to `ProductList` to handle product categories via state.
+- Local tests passing (4/4); Docker/Nginx configuration verified in spec and runbook.
+- Note: Current API calls in `ecommerce-frontend` target `http://localhost:5000` by default; backend connection needed for full functionality.
 
 ---
 <!-- END OF FILE — append new Completed Days entries above the Last Session Summary block,
