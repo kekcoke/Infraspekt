@@ -91,6 +91,6 @@ jobs:
       - uses: actions/checkout@v5
       - name: Build Images
         run: |
-          docker build --no-cache -f $(pwd)/backend/backend.Dockerfile -t backend:ci ./backend
+          docker build --no-cache   -t backend:ci ./backend
           docker build -t python-backend:ci ./python-backend
           docker build -t frontend:ci ./ecommerce-frontend
