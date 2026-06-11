@@ -16,6 +16,21 @@ services:
       retries: 3
     restart: unless-stopped
 
+  python-backend:
+    build:
+      context: ./python-backend
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=development
+      - SECRET_KEY=dev-secret-key-change-in-production
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/api/v1/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
   frontend:
     build:
       context: ./frontend
