@@ -1,8 +1,7 @@
 FROM node:24-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-# Use built-in npm with clean install
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 FROM node:24-alpine AS runtime
 WORKDIR /app
