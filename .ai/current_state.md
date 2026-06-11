@@ -27,6 +27,7 @@
 | Day | Title | Key Output | Notes | Assignment |
 |---|---|---|---|---|
 | 01 | InfraWatch Foundation | `docs/architecture/day_01_spec.md`, `backend/src/`, `frontend/public/index.html`, `docker-compose.yml`, `.github/workflows/ci.yml`, `ops/runbooks/day_01_runbook.md` | Assignment: disk endpoint + branch strategy implemented | ✅ `GET /api/infrastructure/disk` + branch strategy documented in runbook |
+| 02 | Python Flask Backend | `docs/architecture/day_02_spec.md`, `python-backend/app/`, `python-backend/tests/` (15 tests, 100% cov), `python-backend/Dockerfile`, `ops/runbooks/day_02_runbook.md` | App factory, 3 blueprints, metrics assignment, request-duration middleware; PR #4 open against develop | ✅ All 5 endpoints + middleware + CI job added |
 
 ---
 
@@ -48,7 +49,8 @@
 |---|---|---|---|
 | Express.js backend (Node 18) | Day 01 | — | `backend/src/server.js`; port 3001 (env: PORT) |
 | Static frontend (nginx) | Day 01 | — | `frontend/public/index.html`; port 3000; polls backend every 30s |
-| Docker Compose stack | Day 01 | — | `docker-compose.yml`; backend healthcheck gates frontend startup |
+| Docker Compose stack | Day 01 | Day 02 | `docker-compose.yml`; backend healthcheck gates frontend startup |
+| Python/Flask backend (Flask 2.3, Python 3.11) | Day 02 | — | `python-backend/app/`; port 5001 (gunicorn); app factory + 3 blueprints (health, infrastructure, metrics) |
 
 ---
 
@@ -57,11 +59,11 @@
 > The current known state of the running system. Updated each day.
 
 ```
-Services:   infrawatch-backend (Express, port 3001), infrawatch-frontend (nginx, port 3000)
+Services:   infrawatch-backend (Express, port 3001), infrawatch-python-backend (Flask/gunicorn, port 5001), infrawatch-frontend (nginx, port 3000)
 Databases:  (none configured)
 Queues:     (none configured)
 Auth:       (none configured)
-CI/CD:      GitHub Actions — lint + test + docker build on push to main/develop/feature/**
+CI/CD:      GitHub Actions — lint+test (Node 18) + lint+test (Python 3.11) + docker build on push to main/develop/feature/**
 ```
 
 ---
@@ -91,11 +93,11 @@ CI/CD:      GitHub Actions — lint + test + docker build on push to main/develo
 ## Last Session Summary
 
 **Date:** 2026-06-11
-**Day Completed:** Day 01 — InfraWatch Foundation
+**Day Completed:** Day 02 — Python Flask Backend
 **Handed Off To Next Session:**
-- Backend is a plain Express app with no DB/auth yet; Day 02 should build on top of `backend/src/` without replacing it.
-- Assignment branch strategy (feature/disk-monitoring → develop → main) is documented in runbook but not enforced via GitHub branch protection — add protection rules before Day 02 if using a real remote.
-- Static service data in `/api/infrastructure/status` is hardcoded; replace with real system metrics when a data layer is introduced.
+- Python backend (`python-backend/`) runs on port 5001; Node backend (`backend/`) on 3001 — both coexist unchanged.
+- PR #4 (feat/day02-python_backend → develop) is open at https://github.com/kekcoke/Infraspekt/pull/4 — merge manually (PAT lacks merge permission).
+- All mock data in python-backend; real metrics/DB layer planned Day 10–15 per dependency map.
 
 ---
 <!-- END OF FILE — append new Completed Days entries above the Last Session Summary block,
