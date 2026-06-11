@@ -40,4 +40,4 @@ logs/*
 *.rej
 *.sublime-project
 *.sublime-workspace
-*.code-workspace
+*.code-workspacebackend/coverage/
