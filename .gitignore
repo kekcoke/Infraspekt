@@ -4,7 +4,7 @@
 !.ai/orchestration.md
 templates/*
 .env.local
-backend/node_modules/*
+**/node_modules/
 dist/*
 build/*
 coverage/*
@@ -43,4 +43,7 @@ logs/*
 *.rej
 *.sublime-project
 *.sublime-workspace
-*.code-workspacebackend/coverage/
+*.code-workspace
+backend/coverage/
+
+
