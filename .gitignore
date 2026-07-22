@@ -45,5 +45,6 @@ logs/*
 *.sublime-workspace
 *.code-workspace
 backend/coverage/
+scripts/coverage/
 
 
